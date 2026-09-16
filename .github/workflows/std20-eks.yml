@@ -37,9 +37,9 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          sed -i "s|image: ${{ secrets.DOCKER_HUB_USERNAME }}/nginx:.*|image: ${{ secrets.DOCKER_HUB_USERNAME }}/nginx:${{ github.sha }}|g" ./k8s/std20-deployment.yaml
+          sed -i "s|image: ${{ secrets.DOCKER_HUB_USERNAME }}/nginx:.*|image: ${{ secrets.DOCKER_HUB_USERNAME }}/nginx:${{ github.sha }}|g" ./k8s/std20-deployment-ex.yaml
 
-          git add ./k8s/std20-deployment.yaml
+          git add ./k8s/std20-deployment-ex.yaml
           git commit -m "Update nginx image tag to ${{ github.sha }}"
           git push
 
