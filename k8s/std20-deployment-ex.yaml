@@ -2,17 +2,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: std20-nginx-deployment
+  name: std20-nginx-deployment-ex
   namespace: default
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: std20-nginx-web
+      app: std20-nginx-web-ex
   template:
     metadata:
       labels:
-        app: std20-nginx-web
+        app: std20-nginx-web-ex
     spec:
       containers:
       - name: std20-nginx-container
@@ -25,12 +25,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: std20-nginx-service
+  name: std20-nginx-service-ex
   namespace: default
 spec:
   type: ClusterIP
   selector:
-    app: std20-nginx-web
+    app: std20-nginx-web-ex
   ports:
     - protocol: TCP
       port: 80
@@ -42,12 +42,12 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: std20-alb-basic
+  name: std20-alb-basic-ex
   annotations:    # 보안 그룹 등 AWS 에 대한 설정들
     alb.ingress.kubernetes.io/scheme: internet-facing # 외부 로드 밸런서 (ip부여) / internal(사설)
     alb.ingress.kubernetes.io/target-type: ip 
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
-    alb.ingress.kubernetes.io/transforms.std20-nginx-service: >
+    alb.ingress.kubernetes.io/transforms.std20-nginx-service-ex: >
       [
         {
           "type": "url-rewrite",
@@ -70,6 +70,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: std20-nginx-service
+                name: std20-nginx-service-ex
                 port:
                   number: 80
